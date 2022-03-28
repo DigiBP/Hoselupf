@@ -1,3 +1,36 @@
+# Hoselupf
+This documentation describes the contributions of team "Hoselupf" for the assessment of the master course "Digitalization of Business Processes" at the University of Applied Sciences and Arts Northwestern Switzerland. The following authors contributed to the successful creation of the corresponding artefacts and documentation: 
+* Alexandre Miccoli
+* Cedric Roggwiller
+* David Räz
+* Kim Locher
+* Marco Zoccoletti
+
+## Description of the use case
+To address changing demands with non scalable production plants can be a challenge for several industries. So as for the company Georg Utz AG which is operating in the field of producing logistic products out of plastic. In order to face this challenge the company associated with partners / suppliers who has similar tools to outsource production if needed. Unfortunately each outsourcing request is individual and is therefore processed in a manual way, especially the supplier selection. With the implementation of a new ERP System and the incresing uncertainty in the market (which leads to more outsourcing demands) the company realised the need of a structured inquiry process. To conclude, the purpose of this case is to describe the decisions and tasks that have to be covered in the production planning before the request gets to the purchaising department and also how the selection of a suitable supplier looks like  before placing the order.
+
+### Detailed as-is process description
+The process starts at the moment, when the production planning department recieves an input out of the ERP System, that the minimum quantity of a stock product is undercut. After that they first fiqure out which mould they need to produce the product and check then, whether they have the capacity to produce internally or if the production is postponable. If none of those is possible the production has to be outsourced. But to which supplier can the request be sent to? This depends on the size of the mould. A larger mold requires a larger machine, which not every supplier has at their disposal. For that reason the production planning decides which supplier group is requested. With that input and some further maschine requirements the purchasing department is able to create a request and send it out to the mentioned supplier group. Once the purchasing department has received the offer, the production planning checks the different offers and does a preselection. With the remaining suppliers the purchaising department will negociate the price and send back the final price to the planning department. The situation is now different. Production planning knows the concrete costs and can now decide once again whether outsourcing is still attractive or if they rather accept delays in delivery and prouce interally. Regarding the high quality expectation of the company, is very likely that they outsource the production in order to meet the delivery time. In this case, the purchasing department sends tasks to all parties involved (material planners, mold makers, logistics) to inform them about the materials that are to be provided to the supplier. 
+As it is difficult to the purchasing department to know, how long the preparation lasts, the order with the pick-up date of the provided materials is first sent when the purchaser receives the feedback of the production. With the sent order the process "request to order" ends. 
+## As-Is Process
+Insert As-Is Model here
+
+## Identification of digitalization potential
+
+## Workflow modelling with user tasks and decision tasks
+
+## Selection of iSaaS
+
+## Process Modelling with Service Tasks
+
+## Service Integration with iSaaS
+
+## Process Modelling with Error Handling
+
+## Conclusion
+
+# Camunda Versioning and Licence Info
+
 # DigiBP Camunda Template
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
