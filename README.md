@@ -23,11 +23,9 @@ The following digitalization potential has been identified:
 - A decision table should be implemented where a preselection of the manufactoring company can be done automatically based on the machine weight
 - The result should be filled automatically in a HTML form to double check
 
-## Workflow modelling with user tasks, decision tasks and service Tasks
+## Workflow modelling with user tasks, decision tasks and service tasks
 
 ## Selection of iSaaS
-
-## Process Modelling with 
 
 ## Service Integration with iSaaS
 
