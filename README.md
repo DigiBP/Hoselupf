@@ -33,11 +33,15 @@ The following digitalization potential has been identified:
 
 ## Process Modelling with Error Handling
 
-## Conclusion
+## Conclusion & Next Steps
 
-# Camunda Versioning and Licence Info
+## How to Hoselupf
 
-# DigiBP Camunda Template
+
+
+## Camunda Versioning and Licence Info
+
+### DigiBP Camunda Template
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Deploy to Heroku](https://img.shields.io/badge/deploy%20to-Heroku-6762a6.svg?longCache=true)](https://heroku.com/deploy)
