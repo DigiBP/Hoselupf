@@ -14,7 +14,7 @@ The process starts at the moment, when the production planning department reciev
 As it is difficult to the purchasing department to know, how long the preparation lasts, the order with the pick-up date of the provided materials is d
 sent when the purchaser receives the feedback of the production. With the sent order the process "request to order" ends. 
 ## As-Is Process
-Insert As-Is Model here
+![alt text](https://github.com/DigiBP/Hoselupf/blob/master/as_is_process.png?raw=true "as is process")
 
 ## Identification of digitalization potential
 
