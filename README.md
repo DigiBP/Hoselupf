@@ -21,7 +21,7 @@ The following digitalization potential has been identified:
 - The process is to be started by an automatic inbound API call. The information about article, date, stock, order level, tools and sales order.
 - Implementation of service task where an outbound API call is triggered with the information about the production date target, and if capacity is availabe. This is the basis for the decision table
 - A decision table should be implemented where a preselection of the manufactoring company can be done automatically based on the machine weight
-- 
+- The result should be filled automatically in a HTML form to double check
 
 ## Workflow modelling with user tasks and decision tasks
 
