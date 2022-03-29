@@ -17,6 +17,9 @@ sent when the purchaser receives the feedback of the production. With the sent o
 ![alt text](https://github.com/DigiBP/Hoselupf/blob/master/as_is_process.png?raw=true "as is process")
 
 ## Identification of digitalization potential
+The following digitalization potential has been identified:
+- The process is to be started by an automatic inbound API call. The information about article, date, stock, order level, tools and sales order.
+- 
 
 ## Workflow modelling with user tasks and decision tasks
 
