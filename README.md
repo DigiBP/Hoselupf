@@ -14,16 +14,21 @@ The process starts at the moment, when the production planning department reciev
 As it is difficult to the purchasing department to know, how long the preparation lasts, the order with the pick-up date of the provided materials is d
 sent when the purchaser receives the feedback of the production. With the sent order the process "request to order" ends. 
 ## As-Is Process
-![alt text](https://github.com/DigiBP/Hoselupf/blob/master/as_is_process.png?raw=true "as is process")
+![alt text](/readmeAssets/as_is_process.png?raw=true "as is process")
 
 ## Identification of digitalization potential
-The following digitalization potential has been identified:
-- The process is to be started by an automatic inbound API call. The information about article, date, stock, order level, tools and sales order.
-- Implementation of service task where an outbound API call is triggered with the information about the production date target, and if capacity is availabe. This is the basis for the decision table
-- A decision table should be implemented where a preselection of the manufactoring company can be done automatically based on the machine weight
-- The result should be filled automatically in a HTML form to double check
+During a brainstorming session based on the existing as-is process, the following digitalization potential has been identified:
+- Inbound API: The process is to be started by an automatic inbound API call, which would be triggered by the inventory module of the ERP system, as soon as the minimum inventory is undercut. The API call contains data like article, date, stock, reorder level, tools and sales order. This may be subject to change, when implementing the final solution.
+- Outbound API: As the ERP system does not know about if there is capacity available to produce the order in house, there needs to be an Outbound API call to the Manufacturing & Execution System (MES), to get the information if the capacity is available or not.
+- Decision table: The data from the inbound API as well as from the response of the outbound API are the input values of a new decision table, in which it is decided if the order can be produced in house and if not, a preselection of the manufactoring company can be done automatically based on the machine weight.
+- Ticketing/Offer Management Tool: From here on, a combination of forms, notifications and overviews will provide the necessary functionalities to efficiently handle the collaboration between the production and purchasing employee as well with the supplier and production department.
+
+![alt text](/readmeAssets/digitalization_of_process.png?raw=true "digitalization of process")
 
 ## Workflow modelling with user tasks, decision tasks and service tasks
+
+![alt text](/readmeAssets/decisiontable.png?raw=true "decision table")
+
 
 ## Selection of iSaaS
 
