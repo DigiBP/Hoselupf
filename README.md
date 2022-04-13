@@ -34,11 +34,24 @@ During a brainstorming session based on the existing as-is process, the followin
 
 ## Selection of iSaaS
 
+The selection of iSaaS tools is based on an analysis of the tools and system landscape already in use by the company. In the sense of reuse, maintainability and the potential cost savings (or even economies of scale), we prefer software solutions already in place over totally new solutions. In this chapter, the main decisions are first briefly described. The proposed tools and interfaces for the steps to digitalize are then roughly presented individually.
+
+- As Microsoft 365 (M365) is already in use at Georg Utz AG, we mainly build our digitalization solution on tools out of the M365 suite, along with technology support from Microsoft Azure services.
+- A M365 test tenant has been created for the project team (hoselupf.onmicrosoft.com), which will be used as a playground and demonstration tenant. Thereby, any damages to productive systems and data can be avoided. The tenant currently provides one user with a Business Basic license as well as the premium version of Power Automate.
+- To overlook the process, Camunda has been chosen as a workflow engine, since it offers a better overview and flow control than Power Automate when it comes to integrating software outside the M365 portfolio.
+- If our solution is to be productively implemented by the company, Camunda might be hosted within the Azure cloud services. For the sake of the project, the workflow engine will be hosted in Heroku. Otherwise, additional costs would be generated, which the project team would have to cover. The same applies for other third-party open source software, which the project team would use.
+- When it comes to messaging, priority is given to [Azure Queue Storage](https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction). An attempt to establish the connection out of Camunda will be made by the team. At a glance, it seems that the message queue solution should be enough, and no [Service Bus](https://azure.microsoft.com/en-us/services/service-bus/) is needed.
+- For the management of lists (e.g., requests for quotation (RFQ), quotations), [SharePoint Online](https://docs.microsoft.com/en-us/sharepoint/introduction) is the preferred tool.
+- The interactions between SharePoint and external stakeholders (e.g., companies replying to an RFQ) shall happen either via email (with a certain degree of automation) or via custom forms. Any other solution (e.g., Microsoft Forms, Ticketing Systems) is seen as a security issue, since it is almost impossible to confirm the identity of the user.
+
 ## Service Integration with iSaaS
 
 ## Process Modelling with Error Handling
 
 ## Conclusion & Next Steps
+
+Ideas for the conclusion:
+- Add a cost estimate for the M365/Azure products in use
 
 ## How to Hoselupf
 
