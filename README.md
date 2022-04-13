@@ -1,3 +1,5 @@
+![alt text](/readmeAssets/header.jpg?raw=true "Hoselupf Header Image")
+
 # Hoselupf
 This documentation describes the contributions of team "Hoselupf" for the assessment of the master course "Digitalization of Business Processes" at the University of Applied Sciences and Arts Northwestern Switzerland. The following authors contributed to the successful creation of the corresponding artefacts and documentation: 
 * Alexandre Miccoli
