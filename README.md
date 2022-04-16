@@ -44,6 +44,47 @@ The selection of iSaaS tools is based on an analysis of the tools and system lan
 - For the management of lists (e.g., requests for quotation (RFQ), quotations), [SharePoint Online](https://docs.microsoft.com/en-us/sharepoint/introduction) is the preferred tool. If needed, user interfaces can be built on top (e.g., with Microsoft Power Apps).
 - The interactions between SharePoint and external stakeholders (e.g., companies replying to an RFQ) shall happen either via email (with a certain degree of automation) or via custom forms. Any other solution (e.g., Microsoft Forms, Ticketing Systems) is seen as a security issue, since it is almost impossible to confirm the identity of the user.
 - As far as possible, the low-code paradigm is followed, allowing future "superusers" to maintain and adapt the solution without extensive coding knowledge.
+- The primary data store for order-related information created/edited for the digitalized business process shall be SharePoint Online
+
+### Draft of individual steps to digitalize
+
+In each of the following subchapters, the individual steps of the digitalized process are roughly explained.
+
+#### Starting the workflow
+
+When the minimum inventory for a product is undercut, a message is posted to the message queue (MQ), which initializes the workflow in Camunda.
+
+#### Requesting data from MES
+
+To avoid parallel requests to the MES for the same materials, Camunda shall post a message to the MQ to start the request (serialization for an edge case). The API Hub would then contact the MES to return the capacity information.
+This service will be mocked in the particular use case. Therefore, the (mock) MES data will be stored in a SharePoint list.
+
+#### Creating requirements profile
+
+Depending on the result of the decision task, a RFQ profile needs to be created in SharePoint. This task can be handled synchronously. Therefor, the workflow engine triggers the API Hub, which creates the entry in SharePoint via MS Graph.
+The purchasing department is automatically notified once such a new profile has been created.
+
+#### Initiating a request for quotations
+
+The purchasing department accesses the newly created profile via a Power App. The purchaser can verify the entry and start the request to partners. Once started, the potential providers receive a unique link to deposit their quotation on a custom portal.
+
+#### Handing in quotations
+
+Quotations are entered/uploaded by the providers on a dedicated application. The data is automatically saved in SharePoint (via Graph API).
+
+#### Select a quotation and close the RFQ
+
+Once all quotations arrived, or the deadline is reached, the purchasing department is notified and asked to select the next step (select a quotation, produce internally). Here, the purchaser can still edit the entries in the Power App. Once the RFQ is closed, all involved partners are notified automatically (acceptance/rejection of quotation).
+
+#### Ask for inventory check
+
+If it was decided to produce internally, an MS Planner task is created automatically for the warehouse employees to check availabilities.  
+
+### Architectural Overview
+
+The following image depicts a (highly) simplified overview of the services in use.
+
+![alt text](/readmeAssets/architecture/service_integration_simplified_v0.jpg?raw=true "Simplified Architecture Overview")
 
 ## Service Integration with iSaaS
 
