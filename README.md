@@ -9,20 +9,20 @@ This documentation describes the contributions of team "Hoselupf" for the assess
 * Marco Zoccoletti
 
 ## Description of the use case
-To address changing demands with non scalable production plants can be a challenge for several industries. So as for the company Georg Utz AG which is operating in the field of producing logistic products out of plastic. In order to face this challenge the company associated with partners / suppliers who has similar tools to outsource production if needed. Unfortunately each outsourcing request is individual and is therefore processed in a manual way, especially the supplier selection. With the implementation of a new ERP System and the incresing uncertainty in the market (which leads to more outsourcing demands) the company realised the need of a structured and automated inquiry process. To conclude, the purpose of this case is to describe the decisions and tasks that have to be covered in the production planning before the request gets to the purchaising department and also how the selection of a suitable supplier looks like before placing the order.
+To address changing demands with non-scalable production plants can be a challenge for several industries. So as for the company Georg Utz AG which is operating in the field of producing logistic products out of plastic. In order to face this challenge the company associated with partners and suppliers who has similar tools to outsource production if needed. Unfortunately each outsourcing request is individual and is therefore processed in a manual way, especially the supplier selection. With the implementation of a new ERP System and the increasing uncertainty in the market (which leads to more outsourcing demands) the company realised the need of a structured and automated inquiry process. To conclude, the purpose of this case is to describe the decisions and tasks that have to be covered in the production planning before the request gets to the purchasing department and also how the selection of a suitable supplier looks like before placing the order.
 
 ### Detailed as-is process description including as-is process model
-The process starts at the moment, when the production planning department recieves an input out of the ERP System, that the minimum quantity of a stock product is undercut. After that they first fiqure out which mould they need to produce the product and check then, whether they have the capacity to produce internally or if the production is postponable. If none of those is possible the production has to be outsourced. But to which supplier can the request be sent to? This depends on the size of the mould. A larger mold requires a larger machine, which not every supplier has at their disposal. For that reason the production planning decides which supplier group is requested. With that input and some further machine requirements the purchasing department is able to create a request and send it out to the mentioned supplier group. Once the purchasing department has received the offer, the production planning checks the different offers and does a preselection. With the remaining suppliers the purchaising department will negociate the price and send back the final price to the planning department. The situation is now different. Production planning knows the concrete costs and can now decide once again whether outsourcing is still attractive or if they rather accept delays in delivery and produce interally. Regarding the high quality expectation of the company, it is very likely that they outsource the production in order to meet the delivery time. In this case, the purchasing department sends tasks to all parties involved (material planners, mold makers, logistics) to inform them about the materials that are to be provided to the supplier. 
-As it is difficult to the purchasing department to know, how long the preparation lasts, the order with the pick-up date of the provided materials is d
+The process starts when the production planning department receives an input out of the ERP System, that the minimum quantity of a stock product is undercut. After that, they first figure out which mould they need to produce the product and check then, whether they have the capacity to produce internally or if the production is postponable. If none of those is possible the production has to be outsourced. But to which supplier can the request be sent to? This depends on the size of the mould. A larger mold requires a larger machine, which not every supplier has at their disposal. For that reason the production planning decides which supplier group is requested. With that input and some further machine requirements the purchasing department is able to create a request and send it out to the mentioned supplier group. Once the purchasing department has received the offer, the production planning checks the different offers and does a preselection. With the remaining suppliers the purchasing department will negotiate the price and send back the final price to the planning department. The situation is now different. Production planning knows the concrete costs and can now decide once again whether outsourcing is still attractive or if they rather accept delays in delivery and produce internally. Regarding the high quality expectation of the company, it is very likely that they outsource the production in order to meet the delivery time. In this case, the purchasing department sends tasks to all parties involved (material planners, mold makers, logistics) to inform them about the materials that are to be provided to the supplier. 
+As it is difficult to the purchasing department to know, how long the preparation lasts, the order with the pick-up date of the provided materials is
 sent when the purchaser receives the feedback of the production. With the sent order the process "request to order" ends. 
 
 ![alt text](/readmeAssets/as_is_process.png?raw=true "as is process")
 
 ## Identification of digitalization potential
 During a brainstorming session based on the existing as-is process, the following digitalization potential has been identified:
-- Inbound API: The process is to be started by an automatic inbound API call, which would be triggered by the inventory module of the ERP system, as soon as the minimum inventory is undercut. The API call contains data like article, date, stock, reorder level, tools and sales order. This may be subject to change, when implementing the final solution.
+- Inbound API: The process is to be started by an automatic inbound API call, which would be triggered by the inventory module of the ERP system (e.g., a batch job), as soon as the minimum inventory is undercut. The API call contains data like article, date, stock, reorder level, tools and sales order. This may be subject to change, when implementing the final solution.
 - Outbound API: As the ERP system does not know about if there is capacity available to produce the order in house, there needs to be an Outbound API call to the Manufacturing & Execution System (MES), to get the information if the capacity is available or not.
-- Decision table: The data from the inbound API as well as from the response of the outbound API are the input values of a new decision table, in which it is decided if the order can be produced in house and if not, a preselection of the manufactoring company can be done automatically based on the machine weight.
+- Decision table: The data from the inbound API as well as from the response of the outbound API are the input values of a new decision table, in which it is decided if the order can be produced in house and if not, a preselection of the manufacturing company can be done automatically based on the machine weight.
 - Ticketing/Offer Management Tool: From here on, a combination of forms, notifications and overviews will provide the necessary functionalities to efficiently handle the collaboration between the production and purchasing employee as well with the supplier and production department.
 
 ![alt text](/readmeAssets/digitalization_of_process.png?raw=true "digitalization of process")
@@ -34,11 +34,66 @@ During a brainstorming session based on the existing as-is process, the followin
 
 ## Selection of iSaaS
 
+The selection of iSaaS tools is based on an analysis of the tools and system landscape already in use by the company. In the sense of reuse, maintainability and the potential cost savings (or even economies of scale), we prefer software solutions already in place over totally new solutions. In this chapter, the main decisions are first briefly described. The proposed tools and interfaces for the steps to digitalize are then roughly presented individually.
+
+- As Microsoft 365 (M365) is already in use at Georg Utz AG, we mainly build our digitalization solution on tools out of the M365 suite, along with technology support from Microsoft Azure services.
+- A M365 test tenant has been created for the project team (hoselupf.onmicrosoft.com), which will be used as a playground and demonstration tenant. Thereby, any damages to productive systems and data can be avoided. The tenant currently provides one user with a Business Basic license as well as the premium version of Power Automate.
+- To overlook the process, Camunda has been chosen as a workflow engine, since it offers a better overview and flow control than Power Automate when it comes to integrating software outside the M365 portfolio.
+- If our solution is to be productively implemented by the company, Camunda might be hosted within the Azure cloud services. For the sake of the project, the workflow engine will be hosted in Heroku. Otherwise, additional costs would be generated, which the project team would have to cover. The same applies for other third-party open source software, which the project team would use.
+- When it comes to messaging, priority is given to [Azure Queue Storage](https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction). An attempt to establish the connection out of Camunda will be made by the team. At a glance, it seems that the message queue solution should be enough, and no [Service Bus](https://azure.microsoft.com/en-us/services/service-bus/) is needed.
+- For the management of lists (e.g., requests for quotation (RFQ), quotations), [SharePoint Online](https://docs.microsoft.com/en-us/sharepoint/introduction) is the preferred tool. If needed, user interfaces can be built on top (e.g., with Microsoft Power Apps).
+- The interactions between SharePoint and external stakeholders (e.g., companies replying to an RFQ) shall happen either via email (with a certain degree of automation) or via custom forms. Any other solution (e.g., Microsoft Forms, Ticketing Systems) is seen as a security issue, since it is almost impossible to confirm the identity of the user.
+- As far as possible, the low-code paradigm is followed, allowing future "superusers" to maintain and adapt the solution without extensive coding knowledge.
+- The primary data store for order-related information created/edited for the digitalized business process shall be SharePoint Online
+
+### Draft of individual steps to digitalize
+
+In each of the following subchapters, the individual steps of the digitalized process are roughly explained.
+
+#### Starting the workflow
+
+When the minimum inventory for a product is undercut, a message is posted to the message queue (MQ), which initializes the workflow in Camunda.
+
+#### Requesting data from MES
+
+To avoid parallel requests to the MES for the same materials, Camunda shall post a message to the MQ to start the request (serialization for an edge case). The API Hub would then contact the MES to return the capacity information.
+This service will be mocked in the particular use case. Therefore, the (mock) MES data will be stored in a SharePoint list.
+
+#### Creating requirements profile
+
+Depending on the result of the decision task, a RFQ profile needs to be created in SharePoint. This task can be handled synchronously. Therefor, the workflow engine triggers the API Hub, which creates the entry in SharePoint via MS Graph.
+The purchasing department is automatically notified once such a new profile has been created.
+
+#### Initiating a request for quotations
+
+The purchasing department accesses the newly created profile via a Power App. The purchaser can verify the entry and start the request to partners. Once started, the potential providers receive a unique link to deposit their quotation on a custom portal.
+
+#### Handing in quotations
+
+Quotations are entered/uploaded by the providers on a dedicated application. The data is automatically saved in SharePoint (via Graph API).
+
+#### Select a quotation and close the RFQ
+
+Once all quotations arrived, or the deadline is reached, the purchasing department is notified and asked to select the next step (select a quotation, produce internally). Here, the purchaser can still edit the entries in the Power App. Once the RFQ is closed, all involved partners are notified automatically (acceptance/rejection of quotation).
+
+#### Ask for inventory check
+
+If it was decided to produce internally, an MS Planner task is created automatically for the warehouse employees to check availabilities.  
+
+### Architectural Overview
+
+The following image depicts a (highly) simplified overview of the services in use.
+
+![alt text](/readmeAssets/architecture/service_integration_simplified_v0.jpg?raw=true "Simplified Architecture Overview")
+
 ## Service Integration with iSaaS
 
 ## Process Modelling with Error Handling
 
 ## Conclusion & Next Steps
+
+Ideas for the conclusion:
+- Add a cost estimate for the M365/Azure products in use
 
 ## How to Hoselupf
 
