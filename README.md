@@ -88,6 +88,11 @@ The following image depicts a (highly) simplified overview of the services in us
 
 ## Service Integration with iSaaS
 
+#### Data structure
+Before starting with the main Integration the data structure has to be defined. There is one input source (Microsoft Forms) which provides the necessary information to make a MES request and to automatically create a quotation request. Which data is needed and how the data structure looks like is shown in the image below:
+
+![alt text](/readmeAssets/DataStructure.png?raw=true "Data structure")
+
 ## Process Modelling with Error Handling
 
 ## Conclusion & Next Steps
