@@ -1,0 +1,103 @@
+swagger: "2.0"
+info:
+  description: "With this API collection, manipulations on the MES-Reservations SharePoint Online List can be performed. The 'MES Availability Check' API is exposed via [Microsoft Power Automate](https://flow.microsoft.com) (formerly Flow). The API key can be found [directly in the flow editor](https://switzerland.flow.microsoft.com/manage/environments/Default-4459efe4-508b-4c52-8576-86316272511a/flows/033f8074-8526-454a-a0e7-46a2f09785a4/details). It is defined as `api_key` in the first condition/branching."
+  version: "1.0.0"
+  title: "Mock MES Reservation Checker"
+  contact:
+    email: "alexandre.miccoli@students.fhnw.ch"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "prod-07.switzerlandnorth.logic.azure.com"
+basePath: "/workflows/ae9f2a4b9bad4f1bb18b3dc379ba66cc/triggers/manual/paths/invoke"
+tags:
+- name: "reservation"
+  description: "Operations on MES-Reservations list and its elements"
+  externalDocs:
+    description: "List in SharePoint"
+    url: "https://hoselupf.sharepoint.com/sites/DigiBP/Lists/MESReservations"
+schemes:
+- "https"
+paths:
+  /lookup/{ToolID}/{DateFrom}/{DateTo}:
+    get:
+      tags:
+      - "reservation"
+      summary: "Request if a tool is available in a certain timeframe"
+      description: "Retrurns availability of a tool/machine during the defines timeframe (boolean in header)"
+      operationId: "GetSharepointListItems"
+      produces:
+      - "application/text"
+      parameters:
+      - name: "ToolID"
+        in: "path"
+        description: "ID of the required tool/machine"
+        required: true
+        type: "string"
+      - name: "DateFrom"
+        in: "path"
+        description: "Date from which on reservations are retrieved (larger or equal) in the format yyyy-mm-dd"
+        required: true
+        type: "string"
+      - name: "DateTo"
+        in: "path"
+        description: "Date until which reservations are retrieved (smaller or equal) in the format yyyy-mm-dd"
+        required: true
+        type: "string"
+      - name: "api-version"
+        in: "query"
+        type: "string"
+        required: true
+        description: "Power Automate API Version"
+        default: "2016-06-01"
+      - name: "sp"
+        in: "query"
+        type: "string"
+        required: true
+        description: "Power Automate Run Type (Shared Access Request)"
+        default: "%2Ftriggers%2Fmanual%2Frun"
+      - name: "sv"
+        in: "query"
+        type: "string"
+        required: true
+        description: "Power Automate Flow Version (Shared Access Request)"
+        default: "1.0"
+      - name: "sig"
+        in: "query"
+        type: "string"
+        required: true
+        description: "Power Automate Signature (Shared Access Request)"
+        default: "JjfeckanHlUvL6w9DYqOVPOoQBZo8p_F51PF7TF6uh4"
+      responses:
+        "200":
+          description: "successful operation"
+          headers:
+            available:
+              type: "boolean"
+              description: "States if the tool is available in the requested timeframe"
+        "401":
+          description: "Either no or invalid API key (api_key header) provided, or some required headers (sp, sv, sig) are missing or invalid"
+        "502":
+          description: "Malformed request"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Reservation:
+    type: "object"
+    properties:
+      ToolID:
+        type: "string"
+      DateFrom:
+        type: "string"
+        format: "yyyy-mm-dd"
+      DateTo:
+        type: "string"
+        format: "yyyy-mm-dd"
+externalDocs:
+  description: "Project documentation on GitHub"
+  url: "https://github.com/DigiBP/Hoselupf"
