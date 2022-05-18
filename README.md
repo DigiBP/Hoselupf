@@ -88,12 +88,25 @@ The following image depicts a (highly) simplified overview of the services in us
 
 ## Service Integration with iSaaS
 
-#### Data structure
+### Data structure
 Before starting with the main Integration the data structure has to be defined. There is one input source (Microsoft Forms) which provides the necessary information to make a MES request and to automatically create a quotation request. Which data is needed and how the data structure looks like is shown in the image below:
 
 ![alt text](/readmeAssets/DataStructure.png?raw=true "Data structure")
 
 ## Process Modelling with Error Handling
+
+## API Documentation
+
+### Tooling
+Please use [Swagger editor](https://editor.swagger.io/) to create/read/update the API definitions and corresponding YAML files.
+
+### APIs
+List of available API documentation files
+
+#### Mock MES API to check tool/machine availability
+With this API collection, manipulations on the MES-Reservations SharePoint Online List can be performed. The 'MES Availability Check' API is exposed via [Microsoft Power Automate](https://flow.microsoft.com) (formerly Flow). The API key can be found [directly in the flow editor](https://switzerland.flow.microsoft.com/manage/environments/Default-4459efe4-508b-4c52-8576-86316272511a/flows/033f8074-8526-454a-a0e7-46a2f09785a4/details). It is defined as `api_key` in the first condition/branching.
+
+See [YAML File](apiDocs/mes-reservation-lookup-swagger.yaml)
 
 ## Conclusion & Next Steps
 
