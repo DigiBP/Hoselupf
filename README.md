@@ -34,15 +34,15 @@ During a brainstorming session based on the existing as-is process, the followin
 
 ## Selection of iSaaS
 
-The selection of iSaaS tools is based on an analysis of the tools and system landscape already in use by the company. In the sense of reuse, maintainability and the potential cost savings (or even economies of scale), we prefer software solutions already in place over totally new solutions. In this chapter, the main decisions are first briefly described. The proposed tools and interfaces for the steps to digitalize are then roughly presented individually.
+The selection of iSaaS tools is based on an analysis of the tools and system landscape already in use by the company. In the sense of reuse, maintainability and the potential cost savings, we prefer software solutions already in place over totally new solutions. In this chapter, the main decisions are first briefly described. The proposed tools and interfaces for the steps to digitalize are then roughly presented individually.
 
 - As Microsoft 365 (M365) is already in use at Georg Utz AG, we mainly build our digitalization solution on tools out of the M365 suite, along with technology support from Microsoft Azure services.
 - A M365 test tenant has been created for the project team (hoselupf.onmicrosoft.com), which will be used as a playground and demonstration tenant. Thereby, any damages to productive systems and data can be avoided. The tenant currently provides one user with a Business Basic license as well as the premium version of Power Automate.
 - To overlook the process, Camunda has been chosen as a workflow engine, since it offers a better overview and flow control than Power Automate when it comes to integrating software outside the M365 portfolio.
-- If our solution is to be productively implemented by the company, Camunda might be hosted within the Azure cloud services. For the sake of the project, the workflow engine will be hosted in Heroku. Otherwise, additional costs would be generated, which the project team would have to cover. The same applies for other third-party open source software, which the project team would use.
-- When it comes to messaging, priority is given to [Azure Queue Storage](https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction). An attempt to establish the connection out of Camunda will be made by the team. At a glance, it seems that the message queue solution should be enough, and no [Service Bus](https://azure.microsoft.com/en-us/services/service-bus/) is needed.
+- If our solution is to be productively implemented by the company, Camunda might be hosted within the Azure cloud services. For the sake of the project, the workflow engine will be hosted in Heroku. Otherwise, additional costs would be generated, which the project team would have to cover. The same applies for any other third-party open source software, which the project team would use.
+- When it comes to messaging, and only if a message queue is absolutely required, priority is given to [Azure Queue Storage](https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction). An attempt to establish the connection out of Camunda will then be made by the team, if necessary. At a glance, it seems that the message queue solution would be sufficient, and no [Service Bus](https://azure.microsoft.com/en-us/services/service-bus/) is needed. Since there is no necessity for asynchronous interactions with other systems and no complex orchestration is required, such a message queue should not be of help. 
 - For the management of lists (e.g., requests for quotation (RFQ), quotations), [SharePoint Online](https://docs.microsoft.com/en-us/sharepoint/introduction) is the preferred tool. If needed, user interfaces can be built on top (e.g., with Microsoft Power Apps).
-- The interactions between SharePoint and external stakeholders (e.g., companies replying to an RFQ) shall happen either via email (with a certain degree of automation) or via custom forms. Any other solution (e.g., Microsoft Forms, Ticketing Systems) is seen as a security issue, since it is almost impossible to confirm the identity of the user.
+- The interactions between SharePoint and external stakeholders (e.g., companies replying to an RFQ) shall happen either via email (with a certain degree of automation) or via custom forms. Any other solution (e.g., Microsoft Forms) is seen as a security issue, since it is almost impossible to confirm the identity of the user. Yet, for the purpose of showcasing the automation potential, Microsoft Forms will be used.
 - As far as possible, the low-code paradigm is followed, allowing future "superusers" to maintain and adapt the solution without extensive coding knowledge.
 - The primary data store for order-related information created/edited for the digitalized business process shall be SharePoint Online
 
@@ -52,25 +52,26 @@ In each of the following subchapters, the individual steps of the digitalized pr
 
 #### Starting the workflow
 
-When the minimum inventory for a product is undercut, a message is posted to the message queue (MQ), which initializes the workflow in Camunda.
+When the minimum inventory for a product is undercut, a message is posted to the message queue (MQ), which initializes the workflow in Camunda. This input from the ERP system is mocked by a Microsoft Forms entry, which is automatically forwarded to Camunda using Power Automate.
 
 #### Requesting data from MES
 
-To avoid parallel requests to the MES for the same materials, Camunda shall post a message to the MQ to start the request (serialization for an edge case). The API Hub would then contact the MES to return the capacity information.
-This service will be mocked in the particular use case. Therefore, the (mock) MES data will be stored in a SharePoint list.
+To avoid parallel requests to the MES for the same materials, Camunda will ask production equipment availability in a synchronous manner via an API.  
+This service will be mocked in the particular use case.  Therefore, the (mock) MES data will be stored in a SharePoint list.
 
 #### Creating requirements profile
 
-Depending on the result of the decision task, a RFQ profile needs to be created in SharePoint. This task can be handled synchronously. Therefor, the workflow engine triggers the API Hub, which creates the entry in SharePoint via MS Graph.
+Depending on the result of the decision task, a RFQ profile needs to be created in SharePoint. This task can be handled synchronously. Therefore, the workflow engine triggers a Power Automate API, which creates the entry in SharePoint.
 The purchasing department is automatically notified once such a new profile has been created.
 
 #### Initiating a request for quotations
 
-The purchasing department accesses the newly created profile via a Power App. The purchaser can verify the entry and start the request to partners. Once started, the potential providers receive a unique link to deposit their quotation on a custom portal.
+The purchasing department accesses the newly created profile via a Power App (alternatively, directly via the SharePoint Online UI). The purchaser can verify the entry and start the request to partners. Once started, the potential providers receive a unique link to deposit their quotation on a custom portal.  
+For the purpose of the demonstration, the link will be identical for every supplier, and the input will be collected via Microsoft Forms.
 
 #### Handing in quotations
 
-Quotations are entered/uploaded by the providers on a dedicated application. The data is automatically saved in SharePoint (via Graph API).
+As described above, quotations are entered/uploaded by the providers on a dedicated application. The data is automatically saved in SharePoint. In our showcase, the data input is made via Microsoft Forms. For security reasons, as well as for a better user experience, we recommend a custom solution (e.g., a PHP app communicating with SharePoint via the Microsoft Graph API) for the enterprise use.
 
 #### Select a quotation and close the RFQ
 
@@ -84,7 +85,13 @@ If it was decided to produce internally, an MS Planner task is created automatic
 
 The following image depicts a (highly) simplified overview of the services in use.
 
-![alt text](/readmeAssets/architecture/service_integration_simplified_v0.jpg?raw=true "Simplified Architecture Overview")
+![alt text](/readmeAssets/architecture/service_integration_simplified_m365only_v0.jpg?raw=true "Simplified Architecture Overview")
+
+In case not all services could be integrated with Power Automate and/or the need for messaging services arises, we would recommend such an extended implementation.
+
+![alt text](/readmeAssets/architecture/service_integration_simplified_v0.jpg?raw=true "Extended Architecture Overview")
+
+In such case, we added a custom application interface (API Hub), which would be used to collect and manage all APIs. This is to prevent having endpoints manged through different systems.
 
 ## Service Integration with iSaaS
 
