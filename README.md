@@ -108,6 +108,26 @@ With this API collection, manipulations on the MES-Reservations SharePoint Onlin
 
 See [YAML File](apiDocs/mes-reservation-lookup-swagger.yaml)
 
+## Flow Documentation of PowerAutomate
+The business logic and the busienss process were mapped using Camunda. Within this business process, there are various service tasks that require an external worker. Microsoft PowerSuite was used for this purpose.
+
+The flows are named according to the activities in the business process. The following is a list of the corresponding flows.
+
+- minimum inventory has been undercut
+- request tooling data
+- send requirements profile and manufacturing description
+- check and complete requirements
+- preselect supplier
+- negotiate price and insert result of negotiation 
+- final check if internal production possible or choose supplier
+- provide pick up date for materials
+- verify data and place order
+
+### Short description of the Flows within PowerAutomate
+
+#### Minimum inventory has been undercut
+The 
+
 ## Conclusion & Next Steps
 
 Ideas for the conclusion:
