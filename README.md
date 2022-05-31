@@ -93,6 +93,8 @@ In case not all services could be integrated with Power Automate and/or the need
 
 In such case, we added a custom application interface (API Hub), which would be used to collect and manage all APIs. This is to prevent having endpoints manged through different systems.
 
+Alternatively, a solution such as [Azure API Management](https://azure.microsoft.com/en-us/services/api-management) from Microsoft might be evaluated. Thereby, all API endpoints could be managed centrally via Azure. Therefore, the complete domain services might have to be managed on Azure side.
+
 ## Service Integration with iSaaS
 
 ### Data structure
