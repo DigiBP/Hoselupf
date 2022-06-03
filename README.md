@@ -117,6 +117,11 @@ With this API collection, manipulations on the MES-Reservations SharePoint Onlin
 
 See [YAML File](apiDocs/mes-reservation-lookup-swagger.yaml)
 
+#### RFQ Creation in SharePoint Online
+With this API collection, data can be sent to SharePoint Online RFQ List. The 'Send data to SharePoint' API is exposed via [Microsoft Power Automate](https://flow.microsoft.com) (formerly Flow). The API key can be found [directly in the flow editor](https://switzerland.flow.microsoft.com/manage/environments/Default-4459efe4-508b-4c52-8576-86316272511a/flows/42f02ba0-3e63-4b90-aa04-a8fab14b7bb7). It is defined as `api_key` in the first condition/branching.
+
+See [YAML File](apiDocs/send-data-to-sharepoint-swagger.yaml)
+
 ## Flow Documentation of PowerAutomate
 The business logic and the busienss process were mapped using Camunda. Within this business process, there are various service tasks that require an external worker. Microsoft PowerSuite was used for this purpose.
 
@@ -139,8 +144,11 @@ The
 
 ## Conclusion & Next Steps
 
-Ideas for the conclusion:
-- Add a cost estimate for the M365/Azure products in use
+In a next step, the workflow would have to be thoroughly tested and adapted to cover the user requirements best. The input to start the process might then also be replaced by a trigger from the ERP system, and the mock MES connector might be implemented as a real connector querying the manufacturing planning system.
+
+For this flow demonstration, the premium version of Microsoft Power Automate has been used. Such a license would have to be purchased by the company, if the workflow has to be integrated as-is.
+
+We would recommend to move the Camunda hosting to Microsoft Azure (preferably in the same region as Power Automate) to avoid having separate suppliers. Plus, the latency between the platforms in use (i.e., Camunda and Power Automate) might be reduced. With regards to latencies, a monitoring of the infrastructure might also be added to check the 'technical' performance of the implementation.
 
 ## How to Hoselupf
 
