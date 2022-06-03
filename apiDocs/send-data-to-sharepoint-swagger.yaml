@@ -1,0 +1,97 @@
+swagger: "2.0"
+info:
+  description: "With this API collection, data can be sent to SharePoint Online RFQ List. The 'Send data to SharePoint' API is exposed via [Microsoft Power Automate](https://flow.microsoft.com) (formerly Flow). The API key can be found [directly in the flow editor](https://switzerland.flow.microsoft.com/manage/environments/Default-4459efe4-508b-4c52-8576-86316272511a/flows/42f02ba0-3e63-4b90-aa04-a8fab14b7bb7). It is defined as `api_key` in the first condition/branching."
+  version: "1.0.0"
+  title: "RFQ Creation in SharePoint Online"
+  contact:
+    email: "alexandre.miccoli@students.fhnw.ch"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "prod-07.switzerlandnorth.logic.azure.com"
+basePath: "/workflows/1c45ea10e37949adba32136551b427d2/triggers/manual/paths/invoke"
+tags:
+  - name: "RFQ"
+    description: "Operations on RFQ list and its elements"
+    externalDocs:
+      description: "List in SharePoint"
+      url: "https://hoselupf.sharepoint.com/sites/DigiBP/Lists/RFQ"
+schemes:
+  - "https"
+paths:
+  /:
+    post:
+      tags:
+        - "RFQ"
+      summary: "Create a new RFQ"
+      description: "Creates an RFQ entry and locks the subsequent Camunda task"
+      operationId: "SendDataToSharepoint"
+      produces:
+        - "application/text"
+      parameters:
+        - in: body
+          name: "RFQ Data"
+          description: Required data to create the RFQ
+          schema:
+            $ref: '#/definitions/RFQ'
+        - name: "api-version"
+          in: "query"
+          type: "string"
+          required: true
+          description: "Power Automate API Version"
+          default: "2016-06-01"
+        - name: "sp"
+          in: "query"
+          type: "string"
+          required: true
+          description: "Power Automate Run Type (Shared Access Request)"
+          default: "%2Ftriggers%2Fmanual%2Frun"
+        - name: "sv"
+          in: "query"
+          type: "string"
+          required: true
+          description: "Power Automate Flow Version (Shared Access Request)"
+          default: "1.0"
+        - name: "sig"
+          in: "query"
+          type: "string"
+          required: true
+          description: "Power Automate Signature (Shared Access Request)"
+          default: "LcUFQq7rQvIUN7o29Lf64DsinG1F2lDyj6pn2SWBuMk"
+      responses:
+        "202":
+          description: "Successful operation. The RFQ has been created in SharePoint and the subsequent Camunda task has been fetched and locked."
+        "401":
+          description: "Either no or invalid API key (api_key header) provided, or some required headers (sp, sv, sig) are missing or invalid"
+        "502":
+          description: "Malformed request"
+      security:
+        - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  RFQ:
+    type: "object"
+    properties:
+      Title:
+        type: "string"
+      OrderID.PositionID:
+        type: "string"
+      QuotationDeadline:
+        type: "string"
+        format: "yyyy-mm-dd"
+      DeliveryDate:
+        type: "string"
+        format: "yyyy-mm-dd"
+      Quantity:
+        type: integer
+      ArticleID:
+        type: "string"
+      SupplierGroup:
+        type: "string"
+externalDocs:
+  description: "Project documentation on GitHub"
+  url: "https://github.com/DigiBP/Hoselupf"
