@@ -123,27 +123,56 @@ With this API collection, data can be sent to SharePoint Online RFQ List. The 'S
 See [YAML File](apiDocs/send-data-to-sharepoint-swagger.yaml)
 
 ## Flow Documentation of PowerAutomate
-The business logic and the busienss process were mapped using Camunda. Within this business process, there are various service tasks that require an external worker. Microsoft PowerSuite was used for this purpose.
+The business logic and the business process were mapped with Camunda. Within this business process, there are various service tasks that require an external worker. Microsoft PowerSuite was used for this purpose.
 
-The flows are named according to the activities in the business process. The following is a list of the corresponding flows.
+The workflows are named after the activities in the business process. The corresponding workflows are listed below.
 
-- minimum inventory has been undercut
-- request tooling data
-- send requirements profile and manufacturing description
-- check and complete requirements
-- preselect supplier
-- negotiate price and insert result of negotiation 
-- final check if internal production possible or choose supplier
-- provide pick up date for materials
-- verify data and place order
+- Minimum inventory has been undercut
+- Send data to Sharepoint
+- MES avaialbility check
+- Process supplier responses
+- Check and complete requirements
+- Place order
+- Send rejection to suppliers
+- Negotiations finished
+- Finish supplier preselection
+- Send requirements to purchasing
+- Inform purchasing about material pickup date
 
 ### Short description of the Flows within PowerAutomate
 
 #### Minimum inventory has been undercut
-The 
+A PowerAutomate flow is started as soon as a new response is created to the following Microsoft Forms: https://forms.office.com/Pages/ResponsePage.aspx?id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u
+
+Afterwards these responses are written into an Excel to collect the responses and additionally passed as API Request to Camunda. For this purpose the API interface "Message" is used.
+
+#### Send data to Sharepoint
+A flow is required so that the data can be stored and processed in the sharepoint. For this purpose, an HTTP request with a corresponding payload is waited for. The data is entered from the payload into the respective sharepoint columns. By means of Fetch And Lock API Call this is passed on in Camunda. 
+
+#### MES avaialbility check
+Es wird geprüft, ob bereits Aufträge während eine gewissen Zeitdauer reserviert sind - bei dieser Abfrage ist das ProductionDate und die ProductionDuration massgebend. Es wird in PowerAutomate auf einen HTTP Request gewartet mit, dass diese Prüfung mit den eingetragenen Werten durchführt.
+
+#### Process supplier responses
+Wenn eine neue Quotation eingegeben wird über Microsoft Forms, dann wird dies via Microsoft Teams in den Production Planning Channel geposted und anschliessend via Message API Call wieder zurück ins Camunda geschickt, sodass der Prozess weiterlaufen kann.
+
+#### Check and complete requirements
+Wenn in PowerApps auf 
+
+#### Place order
+
+#### Send rejection to suppliers
+
+#### Negotiations finished
+
+#### Finish supplier preselection
+
+#### Send requirements to purchasing
+
+#### Inform purchasing about material pickup date
+
+
 
 ## Conclusion & Next Steps
-
 In a next step, the workflow would have to be thoroughly tested and adapted to cover the user requirements best. The input to start the process might then also be replaced by a trigger from the ERP system, and the mock MES connector might be implemented as a real connector querying the manufacturing planning system.
 
 For this flow demonstration, the premium version of Microsoft Power Automate has been used. Such a license would have to be purchased by the company, if the workflow has to be integrated as-is.
@@ -151,8 +180,6 @@ For this flow demonstration, the premium version of Microsoft Power Automate has
 We would recommend to move the Camunda hosting to Microsoft Azure (preferably in the same region as Power Automate) to avoid having separate suppliers. Plus, the latency between the platforms in use (i.e., Camunda and Power Automate) might be reduced. With regards to latencies, a monitoring of the infrastructure might also be added to check the 'technical' performance of the implementation.
 
 ## How to Hoselupf
-
-
 
 ## Camunda Versioning and Licence Info
 
