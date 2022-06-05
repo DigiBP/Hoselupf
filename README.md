@@ -142,7 +142,7 @@ The workflows are named after the activities in the business process. The corres
 ### Short description of the Flows within PowerAutomate
 
 #### Minimum inventory has been undercut
-A PowerAutomate flow is started as soon as a new response is created to the following Microsoft Forms: https://forms.office.com/Pages/ResponsePage.aspx?id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u
+A PowerAutomate flow is started as soon as a new response is created to the following [Microsoft Forms:]([https://flow.microsoft.com](https://forms.office.com/Pages/ResponsePage.aspx?id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u)) 
 
 Afterwards these responses are written into an Excel to collect the responses and additionally passed as API Request to Camunda. For this purpose the API interface "Message" is used.
 
