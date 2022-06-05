@@ -27,8 +27,9 @@ During a brainstorming session based on the existing as-is process, the followin
 
 ![alt text](/readmeAssets/digitalization_of_process.png?raw=true "digitalization of process")
 
-## Workflow modelling with user tasks, decision tasks and service tasks
+## Workflow modelling with user tasks, decision tasks, service tasks and error handling
 
+![alt text](/readmeAssets/to_be_process.png?raw=true "to be process")
 ![alt text](/readmeAssets/decisiontable.png?raw=true "decision table")
 
 
@@ -102,8 +103,6 @@ Before starting with the main Integration the data structure has to be defined. 
 
 ![alt text](/readmeAssets/DataStructure.png?raw=true "Data structure")
 
-## Process Modelling with Error Handling
-
 ## API Documentation
 
 ### Tooling
@@ -142,7 +141,7 @@ The workflows are named after the activities in the business process. The corres
 ### Short description of the Flows within PowerAutomate
 
 #### Minimum inventory has been undercut
-A PowerAutomate flow is started as soon as a new response is created to the following [Microsoft Forms](https://forms.office.com/Pages/ResponsePage.aspx?id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u)
+A PowerAutomate flow is started as soon as a new response is created to the following [Microsoft Forms](https://forms.office.com/Pages/ResponsePage.aspx?id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u).
 Afterwards these responses are written into an Excel to collect the responses and additionally passed as API Request to Camunda. For this purpose the API interface "Message" is used, which starts a new process instance in Camunda.
 
 #### MES avaialbility check
@@ -185,27 +184,28 @@ We would recommend to move the Camunda hosting to Microsoft Azure (preferably in
 ## How to Hoselupf
 
 The following plattforms / tools are used to Hoselupf:
+
 (To login with the tools use digi@hoselupf.onmicrosoft.com account. If not yet received, ask the Hoselupf team for the password.)
 
 ### Process logic
-[Camunda](https://digibp.herokuapp.com/camunda/app/tasklist/default/#/login)
-[Microsoft Forms - Input Data](https://forms.office.com/pages/designpagev2.aspx?subpage=design&id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u)
+- [Camunda](https://digibp.herokuapp.com/camunda/app/tasklist/default/#/login) (Login witht the user "hoselupfuser")
 
 ### Input
-[Microsoft Forms - Request for quotation](https://forms.office.com/pages/designpagev2.aspx?subpage=design&id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1URTBGM1E3R0tVQ1FKNDczMVozQlRCSTBYSS4u)
+- [Microsoft Forms - Input Data](https://forms.office.com/pages/designpagev2.aspx?subpage=design&id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u)
+- [Microsoft Forms - Request for quotation](https://forms.office.com/pages/designpagev2.aspx?subpage=design&id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1URTBGM1E3R0tVQ1FKNDczMVozQlRCSTBYSS4u)
 
 ### Storage / Database
-[Microsoft Sharepoint List - Supplier](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/Supplier/AllItems.aspx)
-[Microsoft Sharepoint List - Quotation](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/Quotation/AllItems.aspx)
-[Microsoft Sharepoint List - RFQ](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/RFQ/AllItems.aspx)
-[Microsoft Sharepoint List - MES-Reservations](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/MESReservations/AllItems.aspx)
+- [Microsoft Sharepoint List - Supplier](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/Supplier/AllItems.aspx)
+- [Microsoft Sharepoint List - Quotation](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/Quotation/AllItems.aspx)
+- [Microsoft Sharepoint List - RFQ](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/RFQ/AllItems.aspx)
+- [Microsoft Sharepoint List - MES-Reservations](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/MESReservations/AllItems.aspx)
 
 ### Automatisation
-[Microsoft PowerAutomate Flows](https://switzerland.flow.microsoft.com/manage/environments/Default-4459efe4-508b-4c52-8576-86316272511a/flows)
+- [Microsoft PowerAutomate Flows](https://switzerland.flow.microsoft.com/manage/environments/Default-4459efe4-508b-4c52-8576-86316272511a/flows)
 
 ### Manual Tasks in Power Automate and Communication via Microsoft Teams
-[Microsoft Teams](https://teams.microsoft.com/_#/conversations/General?threadId=19:ujo36z6_xBXjJtkp8KH2Kn2uzaiED7gmaVicTLLQz6c1@thread.tacv2&ctx=channel)
-
+- [Power Apps](https://make.powerapps.com/environments/Default-4459efe4-508b-4c52-8576-86316272511a/apps)
+- [Microsoft Teams](https://teams.microsoft.com/_#/conversations/General?threadId=19:ujo36z6_xBXjJtkp8KH2Kn2uzaiED7gmaVicTLLQz6c1@thread.tacv2&ctx=channel)
 
 ## Camunda Versioning and Licence Info
 
