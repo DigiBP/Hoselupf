@@ -182,6 +182,8 @@ For this flow demonstration, the premium version of Microsoft Power Automate has
 
 We would recommend to move the Camunda hosting to Microsoft Azure (preferably in the same region as Power Automate) to avoid having separate suppliers. Plus, the latency between the platforms in use (i.e., Camunda and Power Automate) might be reduced. With regards to latencies, a monitoring of the infrastructure might also be added to check the 'technical' performance of the implementation.
 
+Currently, there are no limitations in terms of access rights. To ensure a correct segregation of duties, we would recommend assigning permissions (R, W, R/W) to the different SharePoint lists and limit the access to the different Power Apps.
+
 ## Power Apps
 Many tasks to be done for the production planning as well as for the purchasing were implemented in Microsoft Power Apps. They show the data from the Sharepoint lists, and are further enriched with the Power Automate flows, explained above.
 Here are two screenshots of these Power Apps.
