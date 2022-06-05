@@ -150,26 +150,33 @@ Afterwards these responses are written into an Excel to collect the responses an
 A flow is required so that the data can be stored and processed in the sharepoint. For this purpose, an HTTP request with a corresponding payload is waited for. The data is entered from the payload into the respective sharepoint columns. By means of Fetch And Lock API Call this is passed on in Camunda. 
 
 #### MES avaialbility check
-Es wird geprüft, ob bereits Aufträge während eine gewissen Zeitdauer reserviert sind - bei dieser Abfrage ist das ProductionDate und die ProductionDuration massgebend. Es wird in PowerAutomate auf einen HTTP Request gewartet mit, dass diese Prüfung mit den eingetragenen Werten durchführt.
+It is checked whether orders are already reserved for a certain period of time - the ProductionDate and the ProductionDuration are decisive for this query. PowerAutomate waits for a HTTP request that performs this check with the entered values.
 
 #### Process supplier responses
 Wenn eine neue Quotation eingegeben wird über Microsoft Forms, dann wird dies via Microsoft Teams in den Production Planning Channel geposted und anschliessend via Message API Call wieder zurück ins Camunda geschickt, sodass der Prozess weiterlaufen kann.
 
 #### Check and complete requirements
-Wenn in PowerApps auf 
+When a new quotation is entered via Microsoft Forms, it is posted to the Production Planning Channel via Microsoft Teams and then sent back to Camunda via Message API Call so that the process can continue.
 
 #### Place order
+In this Flow the RFQ ID and the Quotation ID is needed in Order to place the Order to the right supplier. An email is being generated an automatically sent to the selected supplier. In addition the Purchasing department is informed within their Microsoft Teams channel that the order was successfully placed. The task will be completed within Camunda wiht a API call.
 
 #### Send rejection to suppliers
+This flow is to select the appropriate supplier. First it checks if within the RFQ the production place is set to internal. If this is the case all the suppliers will be informed by email that their quotation was declined. If the production place is set to external the suppliers that did not pass the  the preselections will be informed that their quotation was declined. The supplier that passed the preselection will be informed to add the material pickup date. Also the Purchasing department will be informed within Microsoft Teams that the production was set to external and a supplier was selected. The task will be completed within Camunda wiht a API call. 
+
 
 #### Negotiations finished
+When the negotiations about the price was finished a notification to the Production Planning department will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call.
 
 #### Finish supplier preselection
+When the supplier preselection was finished a notification to the Purchasing department will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call.
 
 #### Send requirements to purchasing
+With this flow the requirements will be sent out from the Microsoft PowerApp to the Microsoft Teams channel of the Purchasing department. The task will be completed within Camunda wiht a API call
 
+.
 #### Inform purchasing about material pickup date
-
+With this flow the Purchasing department will be informed when the Production Department entered a pickup date for a certain RFQ. This information will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call
 
 
 ## Conclusion & Next Steps
@@ -178,6 +185,8 @@ In a next step, the workflow would have to be thoroughly tested and adapted to c
 For this flow demonstration, the premium version of Microsoft Power Automate has been used. Such a license would have to be purchased by the company, if the workflow has to be integrated as-is.
 
 We would recommend to move the Camunda hosting to Microsoft Azure (preferably in the same region as Power Automate) to avoid having separate suppliers. Plus, the latency between the platforms in use (i.e., Camunda and Power Automate) might be reduced. With regards to latencies, a monitoring of the infrastructure might also be added to check the 'technical' performance of the implementation.
+
+
 
 ## How to Hoselupf
 
