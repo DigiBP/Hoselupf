@@ -28,6 +28,7 @@ During a brainstorming session based on the existing as-is process, the followin
 ![alt text](/readmeAssets/digitalization_of_process.png?raw=true "digitalization of process")
 
 ## Workflow modelling with user tasks, decision tasks, service tasks and error handling
+After the digitalization potential was fully embraced and implemented, the process including the decision table was changed into the following:
 
 ![alt text](/readmeAssets/to_be_process.png?raw=true "to be process")
 ![alt text](/readmeAssets/decisiontable.png?raw=true "decision table")
