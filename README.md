@@ -189,6 +189,16 @@ We would recommend to move the Camunda hosting to Microsoft Azure (preferably in
 
 ## How to Hoselupf
 
+The following plattforms / tools are used to Hoselupf:
+
+[Camunda](https://digibp.herokuapp.com/camunda/app/tasklist/default/#/login)
+[Microsoft Forms - Input Data](https://forms.office.com/pages/designpagev2.aspx?subpage=design&id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u)
+
+
+
+
+
+
 ## Camunda Versioning and Licence Info
 
 ### DigiBP Camunda Template
