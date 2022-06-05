@@ -128,75 +128,83 @@ The business logic and the business process were mapped with Camunda. Within thi
 The workflows are named after the activities in the business process. The corresponding workflows are listed below.
 
 - Minimum inventory has been undercut
-- Send data to Sharepoint
 - MES avaialbility check
-- Process supplier responses
-- Check and complete requirements
-- Place order
-- Send rejection to suppliers
-- Negotiations finished
-- Finish supplier preselection
+- Send data to Sharepoint
 - Send requirements to purchasing
+- Check and complete requirements
+- Process supplier responses
+- Finish supplier preselection
+- Negotiations finished
+- Send rejection to suppliers
 - Inform purchasing about material pickup date
+- Place order
 
 ### Short description of the Flows within PowerAutomate
 
 #### Minimum inventory has been undercut
-A PowerAutomate flow is started as soon as a new response is created to the following [Microsoft Forms:](https://forms.office.com/Pages/ResponsePage.aspx?id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u)
-
-Afterwards these responses are written into an Excel to collect the responses and additionally passed as API Request to Camunda. For this purpose the API interface "Message" is used.
-
-#### Send data to Sharepoint
-A flow is required so that the data can be stored and processed in the sharepoint. For this purpose, an HTTP request with a corresponding payload is waited for. The data is entered from the payload into the respective sharepoint columns. By means of Fetch And Lock API Call this is passed on in Camunda. 
+A PowerAutomate flow is started as soon as a new response is created to the following [Microsoft Forms](https://forms.office.com/Pages/ResponsePage.aspx?id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u)
+Afterwards these responses are written into an Excel to collect the responses and additionally passed as API Request to Camunda. For this purpose the API interface "Message" is used, which starts a new process instance in Camunda.
 
 #### MES avaialbility check
-It is checked whether orders are already reserved for a certain period of time - the ProductionDate and the ProductionDuration are decisive for this query. PowerAutomate waits for a HTTP request that performs this check with the entered values.
+It is checked whether orders are already reserved for a certain period of time - the ProductionDate and the ProductionDuration are decisive for this query. PowerAutomate waits for a HTTP request that performs this check with the entered values, the output sets the capacity variable to true/false, which is then used in the decision table.
 
-#### Process supplier responses
-Wenn eine neue Quotation eingegeben wird über Microsoft Forms, dann wird dies via Microsoft Teams in den Production Planning Channel geposted und anschliessend via Message API Call wieder zurück ins Camunda geschickt, sodass der Prozess weiterlaufen kann.
-
-#### Check and complete requirements
-When a new quotation is entered via Microsoft Forms, it is posted to the Production Planning Channel via Microsoft Teams and then sent back to Camunda via Message API Call so that the process can continue.
-
-#### Place order
-In this Flow the RFQ ID and the Quotation ID is needed in Order to place the Order to the right supplier. An email is being generated an automatically sent to the selected supplier. In addition the Purchasing department is informed within their Microsoft Teams channel that the order was successfully placed. The task will be completed within Camunda wiht a API call.
-
-#### Send rejection to suppliers
-This flow is to select the appropriate supplier. First it checks if within the RFQ the production place is set to internal. If this is the case all the suppliers will be informed by email that their quotation was declined. If the production place is set to external the suppliers that did not pass the  the preselections will be informed that their quotation was declined. The supplier that passed the preselection will be informed to add the material pickup date. Also the Purchasing department will be informed within Microsoft Teams that the production was set to external and a supplier was selected. The task will be completed within Camunda wiht a API call. 
-
-
-#### Negotiations finished
-When the negotiations about the price was finished a notification to the Production Planning department will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call.
-
-#### Finish supplier preselection
-When the supplier preselection was finished a notification to the Purchasing department will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call.
+#### Send data to Sharepoint
+A flow is required so that the data can be stored and processed in Sharepoint. For this purpose, an HTTP request with a corresponding payload is waited for. The data is entered from the payload into the respective sharepoint columns. With FetchAndLock the next service task is started in Camunda. 
 
 #### Send requirements to purchasing
-With this flow the requirements will be sent out from the Microsoft PowerApp to the Microsoft Teams channel of the Purchasing department. The task will be completed within Camunda wiht a API call. 
+With this flow the requirements will be sent out from the Microsoft PowerApp to the Microsoft Teams channel of the Purchasing department. The task will be completed within Camunda with a API call. 
+
+#### Check and complete requirements
+Gets the RFQ and the supplier group of the RFQ (which was a result of the decision table), based on this supplier group get all suppliers and create a quotation for each supplier. Inform the suppliers about the new quotation via email as well as the purchasing about the sent quotations. Inform Camunda to go one step further in the process.
+
+#### Process supplier responses
+Flow is started, when a new quotation was entered by the supplier. The flow further checks if the email of supplier is the same as the one entered in the form, with that we can make sure, that the supplier ist not just answering other quotations. If this check is successful, we update the quotation with the values provided of the supplier and inform the production planning via Teams. If no open quotations are left, we furthermore inform the production planning and move the process one step further in Camunda.
+
+#### Finish supplier preselection
+When the supplier preselection was finished by the production planning, the purchasing team will be notified via MS Teams, as well as the process is Camunda goes on to the next step.
+
+#### Negotiations finished
+When the negotiations about the price was finished by the purchasing department in MS Power Apps, a notification to the Production Planning department will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call, to continue to the next step.
+
+#### Send rejection to suppliers
+This flow is to inform rejected suppliers as well as to continue in the Camunda process. First it checks if within the RFQ the production place is set to internal. If this is the case all the suppliers will be informed by email that their quotation was declined. If the production place is set to external the suppliers that did not pass the the preselections will be informed that their quotation was declined. For the quotation that was chosen, a notification is sent to production, so that they can eneter the material pickup date. Also the Purchasing department will be informed within Microsoft Teams that the production was set to external and a supplier was selected. The task will be completed within Camunda wiht a API call. 
 
 #### Inform purchasing about material pickup date
-With this flow the Purchasing department will be informed when the Production Department entered a pickup date for a certain RFQ. This information will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call.
+With this flow the Purchasing department will be informed when the Production Department entered a pickup date for a certain RFQ, via MS Teams. Hereby the Sharepoint list is watched, and if the material pickup date is filled it, the flow is triggered. The task will be completed within Camunda wiht a API call.
 
+#### Place order
+In this flow the RFQ ID and the Quotation ID is needed in order to place the order to the right supplier. An email is being generated and automatically sent to the selected supplier. In addition the purchasing department is informed within their Microsoft Teams channel that the order was successfully placed. The task and hereby the whole process will be completed within Camunda wiht a API call.
 
 ## Conclusion & Next Steps
-In a next step, the workflow would have to be thoroughly tested and adapted to cover the user requirements best. The input to start the process might then also be replaced by a trigger from the ERP system, and the mock MES connector might be implemented as a real connector querying the manufacturing planning system.
+In a next step, the workflow would have to be thoroughly tested and adapted to cover the user requirements best. The input to start the process might then also be replaced by a trigger from the ERP system, and the mock MES connector might be implemented as a real connector querying the manufacturing planning system. Furthermore the error handling needs to be implemented as already shown in the Camunda workflow.
 
 For this flow demonstration, the premium version of Microsoft Power Automate has been used. Such a license would have to be purchased by the company, if the workflow has to be integrated as-is.
 
 We would recommend to move the Camunda hosting to Microsoft Azure (preferably in the same region as Power Automate) to avoid having separate suppliers. Plus, the latency between the platforms in use (i.e., Camunda and Power Automate) might be reduced. With regards to latencies, a monitoring of the infrastructure might also be added to check the 'technical' performance of the implementation.
 
-
-
 ## How to Hoselupf
 
 The following plattforms / tools are used to Hoselupf:
+(To login with the tools use digi@hoselupf.onmicrosoft.com account. If not yet received, ask the Hoselupf team for the password.)
 
+### Process logic
 [Camunda](https://digibp.herokuapp.com/camunda/app/tasklist/default/#/login)
 [Microsoft Forms - Input Data](https://forms.office.com/pages/designpagev2.aspx?subpage=design&id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u)
 
+### Input
+[Microsoft Forms - Request for quotation](https://forms.office.com/pages/designpagev2.aspx?subpage=design&id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1URTBGM1E3R0tVQ1FKNDczMVozQlRCSTBYSS4u)
 
+### Storage / Database
+[Microsoft Sharepoint List - Supplier](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/Supplier/AllItems.aspx)
+[Microsoft Sharepoint List - Quotation](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/Quotation/AllItems.aspx)
+[Microsoft Sharepoint List - RFQ](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/RFQ/AllItems.aspx)
+[Microsoft Sharepoint List - MES-Reservations](https://hoselupf.sharepoint.com/sites/DigiBP/Lists/MESReservations/AllItems.aspx)
 
+### Automatisation
+[Microsoft PowerAutomate Flows](https://switzerland.flow.microsoft.com/manage/environments/Default-4459efe4-508b-4c52-8576-86316272511a/flows)
 
+### Manual Tasks in Power Automate and Communication via Microsoft Teams
+[Microsoft Teams](https://teams.microsoft.com/_#/conversations/General?threadId=19:ujo36z6_xBXjJtkp8KH2Kn2uzaiED7gmaVicTLLQz6c1@thread.tacv2&ctx=channel)
 
 
 ## Camunda Versioning and Licence Info
