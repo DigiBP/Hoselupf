@@ -172,11 +172,10 @@ When the negotiations about the price was finished a notification to the Product
 When the supplier preselection was finished a notification to the Purchasing department will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call.
 
 #### Send requirements to purchasing
-With this flow the requirements will be sent out from the Microsoft PowerApp to the Microsoft Teams channel of the Purchasing department. The task will be completed within Camunda wiht a API call
+With this flow the requirements will be sent out from the Microsoft PowerApp to the Microsoft Teams channel of the Purchasing department. The task will be completed within Camunda wiht a API call. 
 
-.
 #### Inform purchasing about material pickup date
-With this flow the Purchasing department will be informed when the Production Department entered a pickup date for a certain RFQ. This information will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call
+With this flow the Purchasing department will be informed when the Production Department entered a pickup date for a certain RFQ. This information will be sent via Microsoft Teams. The task will be completed within Camunda wiht a API call.
 
 
 ## Conclusion & Next Steps
