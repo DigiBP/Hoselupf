@@ -101,8 +101,11 @@ Alternatively, a solution such as [Azure API Management](https://azure.microsoft
 
 ### Data structure
 Before starting with the main Integration the data structure has to be defined. There is one input source (Microsoft Forms) which provides the necessary information to make a MES request and to automatically create a quotation request. Which data is needed and how the data structure looks like is shown in the two images below.
+
 Input Data:
+
 ![alt text](/readmeAssets/DataStructureInput.png?raw=true "Data structure - Input")
+
 Data for RFQ:
 ![alt text](/readmeAssets/DataStructure.png?raw=true "Data structure - Request")
 
