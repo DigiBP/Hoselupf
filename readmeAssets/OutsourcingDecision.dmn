@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_0dppnm6" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.0.0">
+  <decision id="Decision_0gbhz03" name="OutsourcingDecision">
+    <decisionTable id="decisionTable_1">
+      <input id="InputClause_0wri7fr" label="Capacity">
+        <inputExpression id="LiteralExpression_04rp1ff" typeRef="boolean">
+          <text>Capacity</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0mg8bcg" label="Penalty">
+        <inputExpression id="LiteralExpression_019qf94" typeRef="boolean">
+          <text>Penalty</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0m6ewe2" label="ToolWeight">
+        <inputExpression id="LiteralExpression_1mxx6xs" typeRef="integer">
+          <text>ToolWeight</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="productionPlace" name="productionPlace" typeRef="string">
+        <outputValues id="UnaryTests_10swbbo">
+          <text></text>
+        </outputValues>
+      </output>
+      <output id="OutputClause_09c4jyv" name="supplierSize" typeRef="string" />
+      <rule id="DecisionRule_1t0tto6">
+        <description></description>
+        <inputEntry id="UnaryTests_0g4jmmk">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_187uthf">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0m5m2xh">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0hqhhim">
+          <text>"internal"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1micl2p">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vnotve">
+        <description></description>
+        <inputEntry id="UnaryTests_0l9o97b">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16zfash">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1dijhcy">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0hmvkwx">
+          <text>"internal"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0fgfh66">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_006cr46">
+        <inputEntry id="UnaryTests_1x4odhd">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1jsypbh">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0u6l41x">
+          <text>&gt; 800</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1t5bxvt">
+          <text>"external"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1j0n2e7">
+          <text>"Large"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_13kwfwq">
+        <inputEntry id="UnaryTests_1gzgueq">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tlmwxa">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1f05ecg">
+          <text>]500..800]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1kyady7">
+          <text>"external"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_05xwus0">
+          <text>"Medium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ft7o6k">
+        <inputEntry id="UnaryTests_0k8h4o7">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1utioka">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rar2ju">
+          <text>&lt;= 500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dnp6rv">
+          <text>"external"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0pp8cra">
+          <text>"Small"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_01xbyrc">
+      <dmndi:DMNShape id="DMNShape_0tvd0wp" dmnElementRef="Decision_0gbhz03">
+        <dc:Bounds height="80" width="180" x="157" y="81" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

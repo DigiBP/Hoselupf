@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_0ih2228" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
+  <decision id="Decision_1mjhswj" name="ProcurementDecision">
+    <decisionTable id="DecisionTable_0vbisql">
+      <input id="Input_1" label="Inhouse Capacity Available" biodi:width="222">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>Capacity</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_1spy9sz">
+          <text>"yes","no"</text>
+        </inputValues>
+      </input>
+      <output id="Output_1" label="Production Place" name="productionPlace" typeRef="boolean" biodi:width="192" />
+      <rule id="DecisionRule_12raamh">
+        <inputEntry id="UnaryTests_0y2whkf">
+          <text>"yes"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0yoifxs">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1m4khe8">
+        <inputEntry id="UnaryTests_1stzy2s">
+          <text>"no"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14cugwj">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1mjhswj">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
