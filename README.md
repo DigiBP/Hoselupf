@@ -203,6 +203,9 @@ The following plattforms / tools are used to Hoselupf:
 
 ### Process logic
 - [Camunda](https://digibp.herokuapp.com/camunda/app/tasklist/default/#/login) (Login witht the user "hoselupfuser")
+- [Camunda Process]
+- [Camunda OutsourcingDecision]
+- [Camunda ProcurementDecision]
 
 ### Input
 - [Microsoft Forms - Input Data](https://forms.office.com/pages/designpagev2.aspx?subpage=design&id=5O9ZRItQUkyFdoYxYnJRGh4918CydulAnBAyB6X-hK1UNUlZMzRUWlVHNUFIWDI1V09SNUhFWVdKUC4u)
