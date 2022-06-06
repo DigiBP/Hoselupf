@@ -104,7 +104,7 @@ Before starting with the main Integration the data structure has to be defined. 
 Input Data:
 ![alt text](/readmeAssets/DataStructureInput.png?raw=true "Data structure - Input")
 Data for RFQ:
-![alt text](/readmeAssets/DataStructureRFQ.png?raw=true "Data structure - Request")
+![alt text](/readmeAssets/DataStructure.png?raw=true "Data structure - Request")
 
 ## API Documentation
 
